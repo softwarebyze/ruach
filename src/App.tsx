@@ -8,7 +8,7 @@ import { Favorites } from "./components/Favorites";
 
 export default function App() {
   return (
-    <Router>
+    <Router basename="zack-ebenfeld-12-11-2023/">
       <Nav />
       <Routes>
         <Route path="/" element={<Home />} />

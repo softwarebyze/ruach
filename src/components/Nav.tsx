@@ -3,7 +3,7 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { NavLink } from "react-router-dom";
 
 const navigation = [
-  { name: "Home", href: "" },
+  { name: "Home", href: "/" },
   { name: "Favorites", href: "/favorites" },
 ];
 

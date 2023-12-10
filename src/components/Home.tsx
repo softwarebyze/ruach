@@ -16,7 +16,7 @@ export function Home() {
   const handleSearch = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const query = e.currentTarget.value;
     setSearchParams({ q: query });
-    const results = await getAutocompleteLocations(query, false);
+    const results = await getAutocompleteLocations(query, true);
     console.log(results);
     setAutocompleteResults(results);
   };
