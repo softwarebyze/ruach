@@ -1,28 +1,19 @@
+import { Routes } from "react-router-dom";
 import "./App.css";
-import { getAutocompleteLocations } from "./api/autocomplete";
 import { Nav } from "./components/Nav";
 
-function App() {
-  const handleSearch = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const query = e.currentTarget.value;
-    const results = await getAutocompleteLocations(query, true);
-    console.log(results);
-  };
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import { Home } from "./components/Home";
+import { Favorites } from "./components/Favorites";
+
+export default function App() {
   return (
-    <>
+    <Router>
       <Nav />
-      <div>
-        <nav></nav>
-        <h1 className="mb-9">Weather</h1>
-        <input
-          className="p-2 rounded-xl"
-          type="search"
-          placeholder="Search for a city"
-          onChange={handleSearch}
-        />
-      </div>
-    </>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/favorites" element={<Favorites />} />
+      </Routes>
+    </Router>
   );
 }
-
-export default App;
