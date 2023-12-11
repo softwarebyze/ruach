@@ -16,7 +16,20 @@ const FavoriteCitiesContext = createContext<FavoriteCitiesContext | undefined>(
   undefined
 );
 
-const initialFavoriteCities: City[] = [];
+const initialFavoriteCities: City[] = [
+  {
+    cityId: "102669",
+    name: "Harbin",
+  },
+  {
+    cityId: "106832",
+    name: "Hangzhou",
+  },
+  {
+    cityId: "122438",
+    name: "Havana",
+  },
+];
 
 type Action = { type: "add" | "remove" | "isFavorite"; city: City };
 
