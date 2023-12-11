@@ -7,7 +7,8 @@ import { useState } from "react";
 import Weather from "./Weather";
 import { City } from "../contexts/FavoriteCitiesContext";
 
-const mockApi = true;
+const mockApi = false;
+const telAvivCityId = "215854";
 
 export function SearchInput({
   handleSearch,
@@ -32,7 +33,7 @@ export function Home() {
   const [autocompleteResults, setAutocompleteResults] =
     useState<AutocompleteResults>([]);
   const currentQuery = searchParams.get("q") ?? "";
-  const currentCityId = searchParams.get("cityId") ?? "";
+  const currentCityId = searchParams.get("cityId") ?? telAvivCityId;
   const [city, setCity] = useState<City | null>(null);
 
   const handleSearch = async (e: React.ChangeEvent<HTMLInputElement>) => {

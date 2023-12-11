@@ -13,7 +13,7 @@ export function Favorites() {
   );
 }
 function FavoriteCity(city: City) {
-  const conditions = useConditions(city.cityId, true);
+  const conditions = useConditions(city.cityId, false);
 
   return (
     <li className="border p-3" key={city.cityId}>
