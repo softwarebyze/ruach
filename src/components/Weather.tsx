@@ -1,62 +1,10 @@
-import { useEffect, useState } from "react";
-import {
-  getCurrentConditions,
-  CurrentConditions,
-} from "../api/currentConditions";
+import { useState } from "react";
 import { AutocompleteResult } from "../api/autocomplete";
-import { Forecast, getForecast } from "../api/forecast";
 import { Conditions } from "./Conditions";
 import { FavoriteButton } from "./FavoriteButton";
-
-function Forecast({
-  forecast,
-  temperatureUnit,
-}: {
-  forecast: Forecast | null;
-  temperatureUnit: "Metric" | "Imperial";
-}) {
-  return (
-    <div className="flex flex-col sm:flex-row gap-2 flex-wrap items-center">
-      {forecast?.DailyForecasts.map((day) => (
-        <div key={day.Date} className="border rounded-xl p-4 my-auto">
-          <p>
-            {new Date(day.Date)
-              .toLocaleDateString("en-US", {
-                weekday: "long",
-              })
-              .slice(0, 3)}
-          </p>
-          <p className="whitespace-nowrap">
-            {`${(
-              (day.Temperature.Minimum.Value + day.Temperature.Maximum.Value) /
-              2
-            ).toFixed(0)}° ${day.Temperature.Minimum.Unit}`}
-          </p>
-        </div>
-      ))}
-    </div>
-  );
-}
-
-const useConditions = (cityId: string, mock: boolean) => {
-  const [conditions, setConditions] = useState<CurrentConditions | null>(null);
-
-  useEffect(() => {
-    getCurrentConditions(cityId, mock).then(setConditions);
-  }, [cityId]);
-
-  return conditions;
-};
-
-const useForecast = (cityId: string, mock: boolean) => {
-  const [forecast, setForecast] = useState<Forecast | null>(null);
-
-  useEffect(() => {
-    getForecast(cityId, mock).then(setForecast);
-  }, [cityId]);
-
-  return forecast;
-};
+import { FiveDayForecast } from "./FiveDayForecast";
+import { useConditions } from "../hooks/useConditions";
+import { useForecast } from "../hooks/useForecast";
 
 export default function Weather({
   cityId,
@@ -88,7 +36,7 @@ export default function Weather({
       </div>
       <p className="text-5xl m-12">{conditions[0].WeatherText}</p>
 
-      <Forecast forecast={forecast} temperatureUnit={temperatureUnit} />
+      <FiveDayForecast forecast={forecast} temperatureUnit={temperatureUnit} />
     </div>
   );
 }
