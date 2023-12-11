@@ -43,7 +43,7 @@ export function Home() {
           </Link>
         ))}
       </div>
-      <Weather cityId={currentCityId} mock={mockApi} />
+      {currentCityId && <Weather cityId={currentCityId} mock={mockApi} />}
     </>
   );
 }
