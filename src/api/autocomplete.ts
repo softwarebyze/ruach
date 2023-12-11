@@ -150,7 +150,8 @@ const mockAutocompleteResults = [
     },
   },
 ];
-export type AutocompleteResults = typeof mockAutocompleteResults;
+export type AutocompleteResult = (typeof mockAutocompleteResults)[0];
+export type AutocompleteResults = AutocompleteResult[];
 
 export async function getAutocompleteLocations(
   query: string,

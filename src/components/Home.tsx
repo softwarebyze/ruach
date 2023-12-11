@@ -1,10 +1,31 @@
-import { Link, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import {
   AutocompleteResults,
+  AutocompleteResult,
   getAutocompleteLocations,
 } from "../api/autocomplete";
 import { useState } from "react";
 import Weather from "./Weather";
+
+const mockApi = true;
+
+export function SearchInput({
+  handleSearch,
+  currentQuery,
+}: {
+  handleSearch: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  currentQuery: string;
+}) {
+  return (
+    <input
+      className="p-2 rounded-xl"
+      type="search"
+      placeholder="Search for a city"
+      onChange={handleSearch}
+      value={currentQuery}
+    />
+  );
+}
 
 export function Home() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -12,38 +33,43 @@ export function Home() {
     useState<AutocompleteResults>([]);
   const currentQuery = searchParams.get("q") ?? "";
   const currentCityId = searchParams.get("cityId") ?? "";
-  const mockApi = true;
+  const [cityData, setCityData] = useState<AutocompleteResult | null>(null);
 
   const handleSearch = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const query = e.currentTarget.value;
-    setSearchParams((prevSearchParams) => ({ ...prevSearchParams, q: query }));
+    setSearchParams((params) => {
+      params.set("q", query);
+      return params;
+    });
     const results = await getAutocompleteLocations(query, mockApi);
-    console.log(results);
     setAutocompleteResults(results);
   };
 
   return (
-    <>
-      <input
-        className="p-2 rounded-xl"
-        type="search"
-        placeholder="Search for a city"
-        onChange={handleSearch}
-        value={currentQuery}
-      />
-      <div className="rounded-md p-1 space-y-1">
+    <div className="flex flex-col justify-center items-center">
+      <SearchInput handleSearch={handleSearch} currentQuery={currentQuery} />
+      <ul className="rounded-md p-1 space-y-1">
         {autocompleteResults.map((result) => (
-          <Link
-            className="block px-4 py-2 hover:bg-gray-100 cursor-pointer rounded-md"
-            to={`?cityId=${result.Key}`}
+          <li
+            className="block px-4 py-2 hover:bg-gray-100 hover:text-blue-500
+             cursor-pointer rounded-md"
             key={result.Key}
-            onClick={() => setAutocompleteResults([])}
+            onClick={() => {
+              setAutocompleteResults([]);
+              setSearchParams((params) => {
+                params.set("cityId", result.Key);
+                return params;
+              });
+              setCityData(result);
+            }}
           >
             {result.LocalizedName}
-          </Link>
+          </li>
         ))}
-      </div>
-      {currentCityId && <Weather cityId={currentCityId} mock={mockApi} />}
-    </>
+      </ul>
+      {currentCityId && cityData && (
+        <Weather cityData={cityData} cityId={currentCityId} mock={mockApi} />
+      )}
+    </div>
   );
 }
