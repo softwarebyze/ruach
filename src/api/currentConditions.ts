@@ -28,7 +28,7 @@ export type CurrentConditions = typeof mockCurrentConditions;
 
 export async function getCurrentConditions(locationKey: string, mock = true) {
   const currentConditionsApiUrl =
-    "http://dataservice.accuweather.com/currentconditions/v1/";
+    "https://dataservice.accuweather.com/currentconditions/v1/";
   return mock
     ? mockCurrentConditions
     : fetch(
