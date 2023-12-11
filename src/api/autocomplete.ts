@@ -158,7 +158,7 @@ export async function getAutocompleteLocations(
   mock = true
 ): Promise<typeof mockAutocompleteResults> {
   const autocompleteApiUrl =
-    "http://dataservice.accuweather.com/locations/v1/cities/autocomplete";
+    "https://dataservice.accuweather.com/locations/v1/cities/autocomplete";
 
   return !query
     ? []
