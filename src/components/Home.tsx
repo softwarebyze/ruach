@@ -1,11 +1,11 @@
 import { useSearchParams } from "react-router-dom";
 import {
   AutocompleteResults,
-  AutocompleteResult,
   getAutocompleteLocations,
 } from "../api/autocomplete";
 import { useState } from "react";
 import Weather from "./Weather";
+import { City } from "../contexts/FavoriteCitiesContext";
 
 const mockApi = true;
 
@@ -33,7 +33,7 @@ export function Home() {
     useState<AutocompleteResults>([]);
   const currentQuery = searchParams.get("q") ?? "";
   const currentCityId = searchParams.get("cityId") ?? "";
-  const [cityData, setCityData] = useState<AutocompleteResult | null>(null);
+  const [city, setCity] = useState<City | null>(null);
 
   const handleSearch = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const query = e.currentTarget.value;
@@ -60,16 +60,14 @@ export function Home() {
                 params.set("cityId", result.Key);
                 return params;
               });
-              setCityData(result);
+              setCity({ name: result.LocalizedName, cityId: result.Key });
             }}
           >
             {result.LocalizedName}
           </li>
         ))}
       </ul>
-      {currentCityId && cityData && (
-        <Weather cityData={cityData} cityId={currentCityId} mock={mockApi} />
-      )}
+      {currentCityId && city && <Weather city={city} mock={mockApi} />}
     </div>
   );
 }

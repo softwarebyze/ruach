@@ -1,14 +1,14 @@
 import { CurrentConditions } from "../api/currentConditions";
-import { AutocompleteResult } from "../api/autocomplete";
+import { City } from "../contexts/FavoriteCitiesContext";
 
 export function Conditions({
   conditions,
-  cityData,
+  city,
   temperatureUnit,
   setMetric,
 }: {
   conditions: CurrentConditions;
-  cityData: AutocompleteResult;
+  city: City;
   temperatureUnit: "Metric" | "Imperial";
   setMetric: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
@@ -21,7 +21,7 @@ export function Conditions({
         alt={conditions[0].WeatherText}
       />
       <div className="text-left">
-        <p>{cityData.LocalizedName}</p>
+        <p>{city.name}</p>
         <p onClick={() => setMetric((prevMetric) => !prevMetric)}>
           {`${conditions[0].Temperature[temperatureUnit].Value}° ${conditions[0].Temperature[temperatureUnit].Unit}`}
         </p>

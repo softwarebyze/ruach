@@ -1,29 +1,23 @@
 import { useState } from "react";
-import { AutocompleteResult } from "../api/autocomplete";
 import { Conditions } from "./Conditions";
 import { FavoriteButton } from "./FavoriteButton";
 import { FiveDayForecast } from "./FiveDayForecast";
 import { useConditions } from "../hooks/useConditions";
 import { useForecast } from "../hooks/useForecast";
+import { City } from "../contexts/FavoriteCitiesContext";
 
 export default function Weather({
-  cityId,
-  cityData,
+  city,
   mock = true,
 }: {
-  cityId: string;
-  cityData: AutocompleteResult;
+  city: City;
   mock?: boolean;
 }) {
   const [metric, setMetric] = useState(true);
   const temperatureUnit = metric ? "Metric" : "Imperial";
 
-  const conditions = useConditions(cityId, mock);
-  const forecast = useForecast(cityId, mock);
-  const city = {
-    cityId,
-    name: cityData.LocalizedName,
-  };
+  const conditions = useConditions(city.cityId, mock);
+  const forecast = useForecast(city.cityId, mock);
 
   return !conditions ? (
     <p>null</p>
@@ -32,7 +26,7 @@ export default function Weather({
       <div className="flex justify-between">
         <Conditions
           conditions={conditions}
-          cityData={cityData}
+          city={city}
           temperatureUnit={temperatureUnit}
           setMetric={setMetric}
         />
