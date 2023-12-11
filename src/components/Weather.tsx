@@ -15,13 +15,22 @@ export default function Weather({
   mock?: boolean;
 }) {
   const [conditions, setConditions] = useState<CurrentConditions | null>(null);
+  const [metric, setMetric] = useState(true);
+  const temperatureUnit = metric ? "Metric" : "Imperial";
+
   useEffect(() => {
     getCurrentConditions(cityId, mock).then(setConditions);
   }, [cityId]);
-  return (
+
+  return !conditions ? (
+    <p>null</p>
+  ) : (
     <div className="border rounded-xl p-4 my-auto">
       <p>{cityData.LocalizedName}</p>
-      <p>{conditions?.[0]?.WeatherText}</p>
+      <p onClick={() => setMetric((prevMetric) => !prevMetric)}>
+        {`${conditions[0].Temperature[temperatureUnit].Value}° ${conditions[0].Temperature[temperatureUnit].Unit}`}
+      </p>
+      <p>{conditions[0].WeatherText}</p>
     </div>
   );
 }
