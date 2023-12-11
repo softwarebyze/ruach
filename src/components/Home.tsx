@@ -1,22 +1,23 @@
 import { Link, useSearchParams } from "react-router-dom";
 import {
-  AutocompleteResult,
+  AutocompleteResults,
   getAutocompleteLocations,
 } from "../api/autocomplete";
 import { useState } from "react";
+import Weather from "./Weather";
 
 export function Home() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [autocompleteResults, setAutocompleteResults] = useState<
-    AutocompleteResult[]
-  >([]);
+  const [autocompleteResults, setAutocompleteResults] =
+    useState<AutocompleteResults>([]);
   const currentQuery = searchParams.get("q") ?? "";
   const currentCityId = searchParams.get("cityId") ?? "";
+  const mockApi = true;
 
   const handleSearch = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const query = e.currentTarget.value;
-    setSearchParams({ q: query });
-    const results = await getAutocompleteLocations(query, true);
+    setSearchParams((prevSearchParams) => ({ ...prevSearchParams, q: query }));
+    const results = await getAutocompleteLocations(query, mockApi);
     console.log(results);
     setAutocompleteResults(results);
   };
@@ -42,7 +43,7 @@ export function Home() {
           </Link>
         ))}
       </div>
-      <h2>{currentCityId}</h2>
+      <Weather cityId={currentCityId} mock={mockApi} />
     </>
   );
 }
