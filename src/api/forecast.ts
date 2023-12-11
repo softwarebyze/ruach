@@ -227,7 +227,7 @@ export type Forecast = typeof mockForecast;
 
 export async function getForecast(locationKey: string, mock = true) {
   const forecastApiUrl =
-    "http://dataservice.accuweather.com/forecasts/v1/daily/5day/";
+    "https://dataservice.accuweather.com/forecasts/v1/daily/5day/";
   return mock
     ? mockForecast
     : fetch(
