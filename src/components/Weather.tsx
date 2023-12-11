@@ -26,6 +26,12 @@ export default function Weather({
     <p>null</p>
   ) : (
     <div className="border rounded-xl p-4 my-auto">
+      <img
+        src={`https://developer.accuweather.com/sites/default/files/${String(
+          conditions[0].WeatherIcon
+        ).padStart(2, "0")}-s.png`}
+        alt={conditions[0].WeatherText}
+      />
       <p>{cityData.LocalizedName}</p>
       <p onClick={() => setMetric((prevMetric) => !prevMetric)}>
         {`${conditions[0].Temperature[temperatureUnit].Value}° ${conditions[0].Temperature[temperatureUnit].Unit}`}
