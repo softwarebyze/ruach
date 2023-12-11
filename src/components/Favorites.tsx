@@ -6,8 +6,8 @@ export function Favorites() {
     <>
       <h2>Favorites</h2>
       <ul>
-        {favoriteCities.map((cityId) => (
-          <li key={cityId}>{cityId}</li>
+        {favoriteCities.map((city) => (
+          <li key={city.cityId}>{city.name}</li>
         ))}
       </ul>
     </>

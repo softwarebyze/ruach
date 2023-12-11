@@ -1,19 +1,19 @@
-import { useFavoriteCities } from "../contexts/FavoriteCitiesContext";
+import { City, useFavoriteCities } from "../contexts/FavoriteCitiesContext";
 
-export function FavoriteButton({ cityId }: { cityId: string }) {
-  const { addFavoriteCity, favoriteCities, removeFavoriteCity } =
+export function FavoriteButton({ city }: { city: City }) {
+  const { addFavoriteCity, removeFavoriteCity, isFavorite } =
     useFavoriteCities();
-  const isFavorite = favoriteCities.includes(cityId);
+  const isFavoriteCity = isFavorite(city);
   const handleClick = () => {
-    if (isFavorite) {
-      removeFavoriteCity(cityId);
+    if (isFavoriteCity) {
+      removeFavoriteCity(city);
     } else {
-      addFavoriteCity(cityId);
+      addFavoriteCity(city);
     }
   };
   return (
     <button className="p-2" onClick={handleClick}>
-      {isFavorite ? "Remove Favorite" : "Add Favorite"}
+      {isFavoriteCity ? "Remove Favorite" : "Add Favorite"}
     </button>
   );
 }

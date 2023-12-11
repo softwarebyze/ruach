@@ -20,6 +20,10 @@ export default function Weather({
 
   const conditions = useConditions(cityId, mock);
   const forecast = useForecast(cityId, mock);
+  const city = {
+    cityId,
+    name: cityData.LocalizedName,
+  };
 
   return !conditions ? (
     <p>null</p>
@@ -32,7 +36,7 @@ export default function Weather({
           temperatureUnit={temperatureUnit}
           setMetric={setMetric}
         />
-        <FavoriteButton cityId={cityId} />
+        <FavoriteButton city={city} />
       </div>
       <p className="text-5xl m-12">{conditions[0].WeatherText}</p>
 

@@ -1,25 +1,33 @@
 import { createContext, useContext, useReducer, ReactNode } from "react";
 
+export type City = {
+  name: string;
+  cityId: string;
+};
+
 interface FavoriteCitiesContext {
-  favoriteCities: string[];
-  addFavoriteCity: (cityId: string) => void;
-  removeFavoriteCity: (cityId: string) => void;
+  favoriteCities: City[];
+  addFavoriteCity: (city: City) => void;
+  removeFavoriteCity: (city: City) => void;
+  isFavorite: (city: City) => boolean;
 }
 
-const FavoriteCitiesContext = createContext<
-  FavoriteCitiesContext | undefined
->(undefined);
+const FavoriteCitiesContext = createContext<FavoriteCitiesContext | undefined>(
+  undefined
+);
 
-const initialFavoriteCities: string[] = [];
+const initialFavoriteCities: City[] = [];
 
-type Action = { type: "add" | "remove"; cityId: string };
+type Action = { type: "add" | "remove" | "isFavorite"; city: City };
 
-const favoriteCitiesReducer = (state: string[], action: Action): string[] => {
+const favoriteCitiesReducer = (state: City[], action: Action): City[] => {
   switch (action.type) {
     case "add":
-      return [...state, action.cityId];
+      return [...state, action.city];
     case "remove":
-      return state.filter((cityId) => cityId !== action.cityId);
+      return state.filter(({ cityId }) => cityId !== action.city.cityId);
+    case "isFavorite":
+      return state.filter(({ cityId }) => cityId === action.city.cityId);
     default:
       return state;
   }
@@ -47,15 +55,17 @@ export const FavoriteCitiesProvider: React.FC<FavoriteCitiesProviderProps> = ({
     initialFavoriteCities
   );
 
-  const addFavoriteCity = (cityId: string): void =>
-    dispatch({ type: "add", cityId });
-  const removeFavoriteCity = (cityId: string): void =>
-    dispatch({ type: "remove", cityId });
+  const addFavoriteCity = (city: City): void => dispatch({ type: "add", city });
+  const removeFavoriteCity = (city: City): void =>
+    dispatch({ type: "remove", city });
+  const isFavorite = (city: City): boolean =>
+    !!favoriteCities.find(({ cityId }) => cityId === city.cityId);
 
   const contextValue: FavoriteCitiesContext = {
     favoriteCities,
     addFavoriteCity,
     removeFavoriteCity,
+    isFavorite,
   };
 
   return (
