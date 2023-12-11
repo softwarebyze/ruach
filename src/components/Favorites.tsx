@@ -1,3 +1,15 @@
+import { useFavoriteCities } from "../contexts/FavoriteCitiesContext";
+
 export function Favorites() {
-  return <h2>Favorites</h2>;
+  const { favoriteCities } = useFavoriteCities();
+  return (
+    <>
+      <h2>Favorites</h2>
+      <ul>
+        {favoriteCities.map((cityId) => (
+          <li key={cityId}>{cityId}</li>
+        ))}
+      </ul>
+    </>
+  );
 }

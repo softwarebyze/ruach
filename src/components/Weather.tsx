@@ -6,6 +6,7 @@ import {
 import { AutocompleteResult } from "../api/autocomplete";
 import { Forecast, getForecast } from "../api/forecast";
 import { Conditions } from "./Conditions";
+import { FavoriteButton } from "./FavoriteButton";
 
 function Forecast({
   forecast,
@@ -83,7 +84,7 @@ export default function Weather({
           temperatureUnit={temperatureUnit}
           setMetric={setMetric}
         />
-        <button className="p-2">Favorite</button>
+        <FavoriteButton cityId={cityId} />
       </div>
       <p className="text-5xl m-12">{conditions[0].WeatherText}</p>
 
