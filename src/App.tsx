@@ -9,7 +9,7 @@ import { FavoriteCitiesProvider } from "./contexts/FavoriteCitiesContext";
 
 export default function App() {
   return (
-    <Router basename="zack-ebenfeld-12-11-2023/">
+    <Router basename="ruach/">
       <Nav />
       <FavoriteCitiesProvider>
         <Routes>
