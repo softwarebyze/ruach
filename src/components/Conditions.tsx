@@ -4,13 +4,13 @@ import { City } from "../contexts/FavoriteCitiesContext";
 export function Conditions({
   conditions,
   city,
-  temperatureUnit,
+  temperatureUnit = "Metric",
   setMetric,
 }: {
   conditions: CurrentConditions;
   city: City;
-  temperatureUnit: "Metric" | "Imperial";
-  setMetric: React.Dispatch<React.SetStateAction<boolean>>;
+  temperatureUnit?: "Metric" | "Imperial";
+  setMetric?: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   return (
     <div className="flex p-2 gap-2">
@@ -22,7 +22,7 @@ export function Conditions({
       />
       <div className="text-left">
         <p>{city.name}</p>
-        <p onClick={() => setMetric((prevMetric) => !prevMetric)}>
+        <p onClick={() => setMetric?.((prevMetric) => !prevMetric)}>
           {`${conditions[0].Temperature[temperatureUnit].Value}° ${conditions[0].Temperature[temperatureUnit].Unit}`}
         </p>
       </div>
